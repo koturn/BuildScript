@@ -62,23 +62,25 @@ build_cygwin() {
     --enable-fail-if-missing \
     --enable-gui=no \
     --enable-multibyte=yes \
-    --enable-perlinterp=yes \
-    --enable-pythoninterp=yes \
-    --enable-rubyinterp=yes \
-    --enable-luainterp=yes \
+    --enable-perlinterp=dynamic \
+    --enable-pythoninterp=dynamic \
+    --enable-python3interp=dynamic \
+    --enable-rubyinterp=dynamic \
+    --enable-luainterp=dynamic \
     --enable-tclinterp=yes \
     --enable-cscope=yes \
     --enable-gpm \
     --enable-cscope \
     --enable-fontset \
     --with-features=huge \
-    --without-x \
     --with-lua-prefix=/usr/local \
+    --with-luajit \
+    --without-x \
     --with-modified-by=koturn \
     --with-compiledby=koturn \
     CFLAGS='-Ofast -march=native -mtune=native -funroll-loops -DNDEBUG' \
     LDFLAGS='-s -Ofast' && \
-    make && \
+    make -j2 && \
     make install
 }
 
@@ -89,18 +91,22 @@ build_linux() {
     --enable-fail-if-missing \
     --enable-gui=yes \
     --enable-multibyte=yes \
-    --enable-perlinterp=yes \
-    --enable-pythoninterp=yes \
-    --enable-rubyinterp=yes \
-    --enable-tclinterp=yes \
-    --enable-luainterp=yes \
+    --enable-perlinterp=dynamic \
+    --enable-pythoninterp=dynamic \
+    --enable-python3interp=dynamic \
+    --enable-rubyinterp=dynamic \
+    --enable-tclinterp=dynamic \
+    --enable-luainterp=dynamic \
     --enable-cscope=yes \
     --enable-mzschemeinterp=yes \
     --enable-gpm \
     --enable-cscope \
     --enable-fontset \
+    --disable-selinux \
     --with-features=huge \
     --with-x \
+    --with-luajit \
+    --with-lua-prefix=/usr/local \
     --with-modified-by=koturn \
     --with-compiledby=koturn \
     CFLAGS='-Ofast -m64 -march=native -mtune=native -funroll-loops -DNDEBUG' \
