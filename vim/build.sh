@@ -56,6 +56,7 @@ while [ $# -gt 0 ]; do
   shift
 done
 
+
 build_cygwin() {
   ./configure \
     --prefix=/usr/local/ \
@@ -66,8 +67,9 @@ build_cygwin() {
     --enable-pythoninterp=dynamic \
     --enable-python3interp=dynamic \
     --enable-rubyinterp=dynamic \
+    --enable-tclinterp=dynamic \
     --enable-luainterp=dynamic \
-    --enable-tclinterp=yes \
+    --enable-terminal \
     --enable-cscope=yes \
     --enable-gpm \
     --enable-cscope \
@@ -78,9 +80,9 @@ build_cygwin() {
     --without-x \
     --with-modified-by=koturn \
     --with-compiledby=koturn \
-    CFLAGS='-Ofast -march=native -mtune=native -funroll-loops -DNDEBUG' \
-    LDFLAGS='-s -Ofast' && \
-    make -j2 && \
+    CFLAGS='-std=gnu11 -Ofast -march=native -mtune=native -funroll-loops -ffast-math -DNDEBUG' \
+    LDFLAGS='-s -Wl,-O1' && \
+    make -j4 && \
     make install
 }
 
@@ -97,6 +99,7 @@ build_linux() {
     --enable-rubyinterp=dynamic \
     --enable-tclinterp=dynamic \
     --enable-luainterp=dynamic \
+    --enable-terminal \
     --enable-cscope=yes \
     --enable-mzschemeinterp=yes \
     --enable-gpm \
@@ -105,15 +108,16 @@ build_linux() {
     --disable-selinux \
     --with-features=huge \
     --with-x \
-    --with-luajit \
     --with-lua-prefix=/usr/local \
+    --with-luajit \
     --with-modified-by=koturn \
     --with-compiledby=koturn \
-    CFLAGS='-Ofast -m64 -march=native -mtune=native -funroll-loops -DNDEBUG' \
-    LDFLAGS='-s -Ofast' && \
-    make -j2 && \
-    make install
+    CFLAGS='-std=gnu11 -Ofast -march=native -mtune=native -funroll-loops -ffast-math -DNDEBUG' \
+    LDFLAGS='-s -Wl,-O1' && \
+    make -j4 && \
+    sudo make install
 }
+
 
 case $platform in
   cygwin)
@@ -126,4 +130,3 @@ case $platform in
     echo 'Invalid platform name' >&2
     ;;
 esac
-shift
