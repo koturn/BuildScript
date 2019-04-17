@@ -1,3 +1,3 @@
 #!/bin/sh -eu
 
-make CCOPT='-Ofast -march=native -flto -fomit-frame-pointer -DNDEBUG'
+make -j4 CCOPT='-std=gnu11 -Ofast -mtune=native -march=native -funroll-loops -ffast-math -DNDEBUG' LDFLAGS='-s -Wl,-O1'
